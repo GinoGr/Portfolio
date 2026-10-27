@@ -180,10 +180,21 @@
       border-block: 1px solid var(--line);
       background: var(--paper-deep);
     }
+    .screen-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 40px;
+      overflow: hidden;
+    }
     .marquee p {
       width: max-content;
+      flex-shrink: 0;
       margin: 0;
-      padding: 13px 0;
+      padding: 0;
+      white-space: nowrap;
       color: var(--muted);
       font: 700 12px/1 "Courier New", monospace;
       letter-spacing: .08em;
@@ -493,6 +504,25 @@
       html { scroll-behavior: auto; }
       *, *::before, *::after { transition: none !important; }
     }
+    
+    @media (max-width: 980px) {
+      .moving-text {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        animation: moveAround 10s linear infinite normal;
+      }
+    }
+
+    @keyframes moveAround {
+      0% { left: 0; transform: translate(-100%, -50%); }
+      100% { left: 100%; transform: translate(0, -50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .moving-text { position: static; transform: none; animation: none; }
+      .marquee p { width: max-content; white-space: nowrap; }
+    }
   </style>
 </head>
 <body>
@@ -532,8 +562,8 @@
     </section>
 
     <div class="marquee" aria-hidden="true">
-      <div class="wrap">
-        <p>Swift / SwiftUI &nbsp;—&nbsp; Next.js / React &nbsp;—&nbsp; C# / ASP.NET Core &nbsp;—&nbsp; Python / PyTorch &nbsp;—&nbsp; Supabase / SQLite</p>
+      <div class="screen-container">
+        <p class="moving-text">Swift / SwiftUI &nbsp;—&nbsp; Next.js / React &nbsp;—&nbsp; C# / ASP.NET Core &nbsp;—&nbsp; Python / PyTorch &nbsp;—&nbsp; Supabase / SQLite</p>
       </div>
     </div>
 
